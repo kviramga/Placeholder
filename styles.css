@@ -18,7 +18,7 @@ body {
   background-color: var(--cream);
 }
 
-/* FLOWERS (spread out + bigger) */
+/* FLOWERS */
 .flowers {
   position: fixed;
   inset: 0;
@@ -28,7 +28,10 @@ body {
 
 .flower {
   position: absolute;
+  display: inline-block;
   font-size: 3rem;
+  line-height: 1;
+  text-align: center;
   opacity: 0.25;
   z-index: -1;
 }
@@ -81,7 +84,7 @@ h2,h3,h4,h5,h6 {
   background: var(--blue);
   color: var(--cream);
   border-radius: 24px;
-  margin: 30px auto;
+  margin: 60px auto 100px; /* 100px bottom gap */
   width: 90%;
   max-width: 1000px;
   position: relative;
@@ -107,32 +110,24 @@ h2,h3,h4,h5,h6 {
   text-decoration: none;
 }
 
-/* Sections */
+/* Sections — 100px gap so flowers show between cards */
 .section {
   padding: 80px 20px;
   width: 90%;
   max-width: 1000px;
-  margin: 0 auto 24px;
+  margin: 0 auto 100px;
   border-radius: 24px;
+  position: relative;
+  z-index: 10;
 }
 
-/* Section colors */
-#info {
-  background: var(--orange);
-  color: var(--cream);
-}
-
-#about {
-  background: var(--peach);
-  color: var(--cream);
-}
-
-#gallery {
+/* Dark cards — solid, flowers would look muddy through these */
+#gallery  {
   background: var(--blue);
   color: var(--cream);
 }
 
-#archive {
+#archive  {
   background: var(--green);
   color: var(--cream);
 }
@@ -142,7 +137,18 @@ h2,h3,h4,h5,h6 {
   color: var(--cream);
 }
 
-/* Heading colors rule */
+/* Warm cards — subtle transparency so flowers softly peek through */
+#info {
+  background: rgba(232, 149, 51, 0.7);
+  color: var(--cream);
+  backdrop-filter: blur(0px);
+}
+
+#about {
+  background: rgba(223, 147, 133, 0.7);
+  color: var(--cream);
+}
+
 .section h1 { color: var(--cream); }
 #gallery h1 { color: var(--cream); }
 
@@ -174,9 +180,7 @@ h2,h3,h4,h5,h6 {
 }
 
 @media (max-width: 980px) {
-  .about-cards {
-    grid-template-columns: 1fr;
-  }
+  .about-cards { grid-template-columns: 1fr; }
 }
 
 .about-card {
@@ -202,12 +206,6 @@ h2,h3,h4,h5,h6 {
   color: var(--cream);
 }
 
-.about-card p {
-  margin: 0;
-  line-height: 1.5;
-  font-size: 0.97rem;
-}
-
 .about-avatar {
   width: 130px;
   height: 130px;
@@ -224,10 +222,11 @@ h2,h3,h4,h5,h6 {
   display: block;
 }
 
+/* FAQ */
 .faq-container {
   display: flex;
-  flex-direction: column; /* vertical list */
-  gap: 24px;             /* spacing between cards */
+  flex-direction: column;
+  gap: 24px;
   margin-top: 30px;
 }
 
@@ -238,12 +237,10 @@ h2,h3,h4,h5,h6 {
   cursor: pointer;
   overflow: hidden;
   transition: max-height 0.6s ease, padding 0.6s ease;
-  max-height: 60px; /* closed state shows only question */
+  max-height: 60px;
 }
 
-.faq-card.open {
-  max-height: 500px; /* enough for answer */
-}
+.faq-card.open { max-height: 500px; }
 
 .faq-card dt {
   font-weight: 800;
@@ -263,9 +260,8 @@ h2,h3,h4,h5,h6 {
   transition: color 0.3s ease;
 }
 
-.faq-card a:hover, .faq-card a:active {
-  color: var(--orange);
-}
+.faq-card a:hover,
+.faq-card a:active { color: var(--orange); }
 
 /* Footer */
 .footer {
@@ -273,8 +269,6 @@ h2,h3,h4,h5,h6 {
   color: var(--cream);
   text-align: center;
   padding: 40px 20px;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
 }
 
 .footer h3 {
