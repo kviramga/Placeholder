@@ -1,34 +1,46 @@
 const flowers = document.querySelectorAll('.flower');
 const flowerData = [];
 
-function randomizeFlowers() {
-  flowers.forEach((flower, idx) => {
-    // Truly random positions across the entire viewport
-    const left = Math.random() * 100;
-    const top = Math.random() * 100;
+function layoutFlowers() {
+  const cols = 6;
+  const rows = 5;
 
-    // More obvious size differences
-    const sizes = [2, 6, 10]; // small, medium, large
-    const size = sizes[Math.floor(Math.random() * sizes.length)];
+  const sizeOptions = [4, 6, 8];
+  const colors = ['rgba(223, 147, 133, 0.32)', 'rgba(232, 149, 51, 0.32)'];
 
-    const rot = Math.random() * 60 - 30;
-    const scrollSensitivity = Math.random() * 0.5 + 0.3;
+  flowers.forEach((flower, i) => {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+
+    let left = (col + 0.5) * (100 / cols);
+    let top = (row + 0.5) * (100 / rows);
+
+    const offsetX = (col % 2 === 0 ? -3 : 3);
+    const offsetY = (row % 2 === 0 ? -3 : 3);
+
+    left += offsetX;
+    top += offsetY;
+
+    const size = sizeOptions[i % sizeOptions.length];
+    const initialRotation = (i % 5) * 12 - 24;
 
     flower.style.left = `${left}%`;
     flower.style.top = `${top}%`;
+    flower.style.width = `${size}rem`;
+    flower.style.height = `${size}rem`;
     flower.style.fontSize = `${size}rem`;
-    flower.style.transform = `rotate(${rot}deg)`;
+    flower.style.transform = `rotate(${initialRotation}deg)`;
+    flower.style.color = colors[i % colors.length];
 
-    // Pink and orange colors
-    const colors = ['#FF69B4', '#E89533'];
-    flower.style.color = colors[Math.floor(Math.random() * colors.length)];
-
-    flowerData[idx] = {
-      initialRotation: rot,
-      scrollSensitivity: scrollSensitivity
-    };
+    // ✅ store data for scroll animation
+    flowerData.push({
+      initialRotation: initialRotation,
+      scrollSensitivity: 0.2 + (i % 3) * 0.1
+    });
   });
 }
+
+layoutFlowers();
 
 // Scroll rotation
 window.addEventListener('scroll', () => {
@@ -36,20 +48,19 @@ window.addEventListener('scroll', () => {
 
   flowers.forEach((flower, idx) => {
     const data = flowerData[idx];
-    if (data) {
-      const additionalRotation = (scrollY * data.scrollSensitivity) % 360;
-      const totalRotation = data.initialRotation + additionalRotation;
-      flower.style.transform = `rotate(${totalRotation}deg)`;
-    }
+
+    const additionalRotation = (scrollY * data.scrollSensitivity) % 360;
+    const totalRotation = data.initialRotation + additionalRotation;
+
+    flower.style.transform = `rotate(${totalRotation}deg)`;
   });
 });
 
-randomizeFlowers();
-
+// FAQ toggle
 const faqCards = document.querySelectorAll('.faq-card');
 
 faqCards.forEach(card => {
   card.addEventListener('click', () => {
-    card.classList.toggle('open'); // toggle only clicked card
+    card.classList.toggle('open');
   });
 });
