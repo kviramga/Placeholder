@@ -224,49 +224,46 @@ h2,h3,h4,h5,h6 {
   display: block;
 }
 
-.faq-cards {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+.faq-container {
+  display: flex;
+  flex-direction: column; /* vertical list */
+  gap: 24px;             /* spacing between cards */
   margin-top: 30px;
 }
 
 .faq-card {
   background: rgba(252, 245, 227, 0.4);
-  border: 1px solid rgba(252, 245, 227, 0.7);
   border-radius: 18px;
-  padding: 24px;
-  color: var(--cream);
+  padding: 16px 32px;
   cursor: pointer;
-  transition: all 0.35s ease;
   overflow: hidden;
-  max-height: 80px; /* collapsed */
+  transition: max-height 0.6s ease, padding 0.6s ease;
+  max-height: 60px; /* closed state shows only question */
 }
 
-.faq-card.active {
-  max-height: 1000px; /* expand to fit content */
+.faq-card.open {
+  max-height: 500px; /* enough for answer */
 }
 
-.faq-card h3 {
-  margin: 0 0 12px;
-  font-size: 1.1rem;
+.faq-card dt {
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  color: var(--cream);
 }
 
-.faq-card p {
+.faq-card dd {
   margin: 0;
-  line-height: 1.6;
+  line-height: 2;
+  color: var(--cream);
 }
 
-/* Links */
-.faq-card p a {
+.faq-card a {
   color: var(--peach);
-  font-weight: 700;
-  text-decoration: underline;
   transition: color 0.3s ease;
 }
 
-.faq-card p a:hover,
-.faq-card p a:active {
+.faq-card a:hover, .faq-card a:active {
   color: var(--orange);
 }
 

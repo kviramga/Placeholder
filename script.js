@@ -49,13 +49,7 @@ randomizeFlowers();
 const faqCards = document.querySelectorAll('.faq-card');
 
 faqCards.forEach(card => {
-  const question = card.querySelector('h3');
-
-  question.addEventListener('click', e => {
-    // Prevent links inside from toggling
-    if(e.target.tagName.toLowerCase() === 'a') return;
-
-    // Toggle only this card
-    card.classList.toggle('active');
+  card.addEventListener('click', () => {
+    card.classList.toggle('open'); // toggle only clicked card
   });
 });
