@@ -1,6 +1,14 @@
 const flowers = document.querySelectorAll('.flower');
 const flowerData = [];
 
+const OFFSETS = [
+  [-3,-3],[3,-3],[-3,3],[3,3],[-2,-4],[4,-2],
+  [-4,2],[2,4],[-3,-2],[3,-2],[-2,3],[2,-3],
+  [-4,-3],[4,3],[-1,-4],[1,4],[-3,1],[3,-1],
+  [-4,0],[4,0],[-2,-3],[2,3],[-3,2],[3,-4],
+  [-1,-2],[1,-4],[-4,1],[4,-1],[-2,2],[2,-2],
+];
+
 function layoutFlowers() {
   const cols = 6;
   const rows = 5;
@@ -15,8 +23,7 @@ function layoutFlowers() {
     let left = (col + 0.5) * (100 / cols);
     let top = (row + 0.5) * (100 / rows);
 
-    const offsetX = (col % 2 === 0 ? -3 : 3);
-    const offsetY = (row % 2 === 0 ? -3 : 3);
+    const [offsetX, offsetY] = OFFSETS[i % OFFSETS.length];
 
     left += offsetX;
     top += offsetY;
@@ -30,9 +37,9 @@ function layoutFlowers() {
     flower.style.height = `${size}rem`;
     flower.style.fontSize = `${size}rem`;
     flower.style.transform = `rotate(${initialRotation}deg)`;
+    flower.style.transformOrigin = 'center center';
     flower.style.color = colors[i % colors.length];
 
-    // ✅ store data for scroll animation
     flowerData.push({
       initialRotation: initialRotation,
       scrollSensitivity: 0.2 + (i % 3) * 0.1
@@ -53,6 +60,7 @@ window.addEventListener('scroll', () => {
     const totalRotation = data.initialRotation + additionalRotation;
 
     flower.style.transform = `rotate(${totalRotation}deg)`;
+    flower.style.transformOrigin = 'center center';
   });
 });
 
