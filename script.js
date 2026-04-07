@@ -93,3 +93,58 @@ document.querySelectorAll('.nav-links a, .hero-cta').forEach(link => {
     }
   });
 });
+
+const carouselTrack = document.querySelector('.carousel-track');
+const images = [
+  '1QR3dgg8ROGb8ChCJtPV1X3YNu2V4Veez',
+  '1sUslTz5FOwsolA2LwOQw_4J1CjVjQwLb',
+  '1MP8K9AXZhPJI2hpiOiaOts2iwW3Xeyyt',
+  '1ZgYSn1mXQ6s63GyHrItkbNKgTts8SAMC',
+  '11xD5y3n5naVamQBN3g7q9513govr4-NO',
+  '1cDSYsHy6e1MztakfOgjtlDe4vqAJtxc0',
+  '1U5QweQyEt4Q2kiD_wnYFU7MLQ2CP7a8_'
+];
+
+// Add images to track
+images.forEach((id, i) => {
+  const img = document.createElement('img');
+  img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
+  if (i === 0) img.classList.add('center');  // first image center
+  carouselTrack.appendChild(img);
+});
+
+// Clone first and last for infinite loop
+const firstClone = carouselTrack.children[0].cloneNode(true);
+const lastClone = carouselTrack.children[images.length - 1].cloneNode(true);
+carouselTrack.appendChild(firstClone);
+carouselTrack.insertBefore(lastClone, carouselTrack.children[0]);
+
+let index = 1;
+const updateCarousel = () => {
+  const imgWidth = carouselTrack.children[0].offsetWidth + 20; // image + margin
+  carouselTrack.style.transform = `translateX(${-imgWidth * index}px)`;
+
+  // Update center class
+  Array.from(carouselTrack.children).forEach(img => img.classList.remove('center'));
+  carouselTrack.children[index].classList.add('center');
+};
+
+// Next/Prev
+document.querySelector('.carousel-arrow.right').addEventListener('click', () => {
+  index++;
+  updateCarousel();
+  if (index >= images.length + 1) {
+    setTimeout(() => { index = 1; updateCarousel(); }, 500);
+  }
+});
+
+document.querySelector('.carousel-arrow.left').addEventListener('click', () => {
+  index--;
+  updateCarousel();
+  if (index <= 0) {
+    setTimeout(() => { index = images.length; updateCarousel(); }, 500);
+  }
+});
+
+// Initial position
+updateCarousel();
