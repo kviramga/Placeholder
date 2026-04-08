@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papq+2V6l1hM1w9nl0hOez3/eYbNTGQf1x8jv3EOy9VhtxOPfxM1dVX6u7HzH0VtLwvI0Fl/pgH+LMR6lR1xow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>InnovateHer</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Neato+Serif&family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+  <a id="mlh-trust-badge" style="display:block;max-width:100px;min-width:60px;position:fixed;right:50px;top:0;width:10%;z-index:10000" href="https://mlh.io/na?utm_source=na-hackathon&utm_medium=TrustBadge&utm_campaign=2026-season&utm_content=blue" target="_blank">
+    <img src="https://s3.amazonaws.com/logged-assets/trust-badge/2026/mlh-trust-badge-2026-black.svg" alt="Major League Hacking 2026 Hackathon Season" style="width:100%">
+  </a>
+
   <div class="flowers">
     <span class="flower style-b">✿</span>
     <span class="flower style-a">❀</span>
@@ -42,14 +47,15 @@
   </div>
 
   <nav class="navbar">
-    <ul class="nav-links">
-      <li><a href="#about">ABOUT</a></li>
-      <li><a href="#info">INFO</a></li>
-      <li><a href="#gallery">GALLERY</a></li>
-      <li><a href="#archive">ARCHIVE</a></li>
-      <li><a href="#faq">FAQ</a></li>
-    </ul>
-  </nav>
+  <ul class="nav-links">
+    <li><a href="#about">ABOUT</a></li>
+    <li><a href="#info">INFO</a></li>
+    <li><a href="#sponsors">SPONSORS</a></li>
+    <li><a href="#gallery">GALLERY</a></li>
+    <li><a href="#archive">ARCHIVE</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+</nav>
 
   <section class="hero-card">
     <h1>InnovateHer 2026</h1>
@@ -92,21 +98,47 @@
 </div>
   </section>
 
+  <section id="sponsors" class="section dark-green">
+  <h1>Past Sponsors</h1>
+  <p>A huge thank you to the organizations that have supported our mission to empower women in technology.</p>
+  
+  <div class="sponsor-grid">
+    <div class="sponsor-card">Oracle</div>
+    <div class="sponsor-card">Capital One</div>
+    <div class="sponsor-card">Lockheed Martin</div>
+    <div class="sponsor-card">Caterpillar</div>
+    <div class="sponsor-card">L3Harris</div>
+    <div class="sponsor-card">Chamberlain Group</div>
+    <div class="sponsor-card">Purdue WHPC</div>
+    <div class="sponsor-card">Wolfram</div>
+    <div class="sponsor-card">MLH</div>
+    <div class="sponsor-card">Groq</div>
+    <div class="sponsor-card">Purdue CS</div>
+    <div class="sponsor-card">Badger</div>
+    <div class="sponsor-card">Pure Buttons</div>
+    <div class="sponsor-card">Women & Hi Tech</div>
+  </div>
+</section>
+
   <section id="gallery" class="section">
     <h1>Gallery</h1>
     <div class="gallery">
       <div class="carousel-wrapper">
-        <div class="carousel-track">
-        <!-- Images inserted via JS -->
+        <div class="carousel">
+          <button class="arrow left">&#10094;</button>
+          <div class="carousel-track">
+          <img class="prev" src="" alt="previous image">
+          <img class="center" src="" alt="center image">
+          <img class="next" src="" alt="next image">
         </div>
-        <button class="carousel-arrow left">&#10094;</button>
-        <button class="carousel-arrow right">&#10095;</button>
+        <button class="arrow right">&#10095;</button>
       </div>
-      <div class="gallery-link">
+    </div>
+    <div class="gallery-link">
         <a href="https://drive.google.com/drive/u/2/folders/1j0sokOG2WLshdQtTA5g6KHG_QRq0h1gA" target="_blank">
           View All 2026 Photos →
         </a>
-      </div>
+    </div>
     </div>
   </section>
 
@@ -160,22 +192,27 @@
   </div>
 </section>
 
-  <footer class="footer text-center">
-  <div class="container">
-    <h3>InnovateHer 2026</h3>
+<footer class="footer">
+  <div class="footer-container">
+    <h3 class="footer-logo">InnovateHer 2026</h3>
+    
     <div class="social-icons">
       <a href="https://instagram.com/innovateherhacks" target="_blank" aria-label="Instagram">
-        <i class="fab fa-instagram"></i>
+        <i class="fa-brands fa-instagram"></i>
       </a>
       <a href="https://www.linkedin.com/company/innovateherhacks/about/" target="_blank" aria-label="LinkedIn">
-        <i class="fab fa-linkedin"></i>
+        <i class="fa-brands fa-linkedin-in"></i>
       </a>
       <a href="mailto:innovateherhacks@gmail.com" aria-label="Gmail">
-        <i class="fas fa-envelope"></i>
+        <i class="fa-solid fa-envelope"></i>
       </a>
       <a href="mailto:inov8her@purdue.edu" aria-label="Outlook Email">
-        <i class="fas fa-envelope-circle-check"></i>
+        <i class="fa-solid fa-envelope-circle-check"></i>
       </a>
+    </div>
+    
+    <div class="footer-bottom">
+      &copy; 2026 InnovateHer. Built with &hearts; at Purdue.
     </div>
   </div>
 </footer>

@@ -1,3 +1,4 @@
+/* FLOWERS */
 const flowers = document.querySelectorAll('.flower');
 const flowerData = [];
 
@@ -30,7 +31,7 @@ function layoutFlowers() {
     const size = sizeOptions[i % sizeOptions.length];
     const initialRotation = (i % 5) * 12 - 24;
 
-    flower.style.position = 'absolute'; // must be absolute
+    flower.style.position = 'absolute';
     flower.style.left = `${left}%`;
     flower.style.top = `${top}%`;
     flower.style.width = `${size}rem`;
@@ -40,7 +41,6 @@ function layoutFlowers() {
     flower.style.textAlign = 'center';
     flower.style.color = colors[i % colors.length];
 
-    // Important: rotate from the center
     flower.style.transformOrigin = '50% 50%';
     flower.style.transform = `rotate(${initialRotation}deg)`;
 
@@ -69,7 +69,7 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// FAQ toggle
+/* FAQ toggle */
 const faqCards = document.querySelectorAll('.faq-card');
 faqCards.forEach(card => {
   card.addEventListener('click', () => {
@@ -77,12 +77,12 @@ faqCards.forEach(card => {
   });
 });
 
-// Smooth scroll for navbar links and hero buttons
+/* Smooth scroll for navbar links and hero buttons */
 document.querySelectorAll('.nav-links a, .hero-cta').forEach(link => {
   link.addEventListener('click', e => {
-    e.preventDefault(); // Prevent default anchor jump
+    e.preventDefault();
 
-    const targetId = link.getAttribute('href')?.slice(1); // remove # if present
+    const targetId = link.getAttribute('href')?.slice(1);
     const targetSection = document.getElementById(targetId);
 
     if (targetSection) {
@@ -94,57 +94,112 @@ document.querySelectorAll('.nav-links a, .hero-cta').forEach(link => {
   });
 });
 
-const carouselTrack = document.querySelector('.carousel-track');
+/* CAROUSEL */
 const images = [
+  '1_S25CJrLUfPKWUwft6DFHbZTbd-oWeCN',
+  '1mSTdIjmH-Q6EZN4ZQQKwr9qVuFl8JJVD',
+  '1MP8K9AXZhPJI2hpiOiaOts2iwW3Xeyyt',
+  '1t_kDYEzJtgN4WeN-cZDex4XTwZL4Q3bg',
   '1QR3dgg8ROGb8ChCJtPV1X3YNu2V4Veez',
   '1sUslTz5FOwsolA2LwOQw_4J1CjVjQwLb',
-  '1MP8K9AXZhPJI2hpiOiaOts2iwW3Xeyyt',
-  '1ZgYSn1mXQ6s63GyHrItkbNKgTts8SAMC',
-  '11xD5y3n5naVamQBN3g7q9513govr4-NO',
-  '1cDSYsHy6e1MztakfOgjtlDe4vqAJtxc0',
-  '1U5QweQyEt4Q2kiD_wnYFU7MLQ2CP7a8_'
+  '1x-h7Bd6jbHtN-xDqSbTHV_6DJGIf3Z_e',
+  '1uwnXnteXUdymN55y-Z0bTx2HPfVgojx6',
+  '1G0E7Gm1VaiICi3wytYUR7PGKJ7qrX12E',
+  '1bVhfZhIgrwGrBksdvX8ov_e0o-DflBdE',
+  '1IXTEQMknsuz2_788L_0HCTQZksYiRK2Z',
+  '1reupqlbbvi4MH3BmzusPLVJWlM58IIPR'
 ];
 
-// Add images to track
-images.forEach((id, i) => {
+let index = 0;
+let animating = false;
+const DURATION = 450; // ms
+
+function imgUrl(id) {
+  return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
+}
+
+function idx(offset) {
+  return (index + offset + images.length) % images.length;
+}
+
+// Build a 5-slot track: [far-prev] [prev] [center] [next] [far-next]
+// Only prev/center/next are visible; far slots are offscreen buffers
+const track = document.querySelector('.carousel-track');
+track.innerHTML = '';
+
+const slots = [];
+for (let i = 0; i < 5; i++) {
   const img = document.createElement('img');
-  img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
-  if (i === 0) img.classList.add('center');  // first image center
-  carouselTrack.appendChild(img);
-});
+  img.style.cssText = `
+    flex-shrink: 0;
+    border-radius: 20px;
+    object-fit: cover;
+    transition: width ${DURATION}ms ease, opacity ${DURATION}ms ease;
+  `;
+  track.appendChild(img);
+  slots.push(img);
+}
 
-// Clone first and last for infinite loop
-const firstClone = carouselTrack.children[0].cloneNode(true);
-const lastClone = carouselTrack.children[images.length - 1].cloneNode(true);
-carouselTrack.appendChild(firstClone);
-carouselTrack.insertBefore(lastClone, carouselTrack.children[0]);
+// slot roles: 0=far-prev, 1=prev, 2=center, 3=next, 4=far-next
+function applySlotStyles() {
+  const styles = [
+    { width: '60%', opacity: '0',   margin: '0' },       // far-prev (hidden)
+    { width: '60%', opacity: '0.5', margin: '0 10px' },  // prev
+    { width: '80%', opacity: '1',   margin: '0 10px' },  // center
+    { width: '60%', opacity: '0.5', margin: '0 10px' },  // next
+    { width: '60%', opacity: '0',   margin: '0' },       // far-next (hidden)
+  ];
+  slots.forEach((img, i) => {
+    img.style.width   = styles[i].width;
+    img.style.opacity = styles[i].opacity;
+    img.style.margin  = styles[i].margin;
+  });
+}
 
-let index = 1;
-const updateCarousel = () => {
-  const imgWidth = carouselTrack.children[0].offsetWidth + 20; // image + margin
-  carouselTrack.style.transform = `translateX(${-imgWidth * index}px)`;
+function loadSlots() {
+  slots[0].src = imgUrl(images[idx(-2)]);
+  slots[1].src = imgUrl(images[idx(-1)]);
+  slots[2].src = imgUrl(images[idx( 0)]);
+  slots[3].src = imgUrl(images[idx( 1)]);
+  slots[4].src = imgUrl(images[idx( 2)]);
+}
 
-  // Update center class
-  Array.from(carouselTrack.children).forEach(img => img.classList.remove('center'));
-  carouselTrack.children[index].classList.add('center');
-};
+function slide(direction) {
+  if (animating) return;
+  animating = true;
 
-// Next/Prev
-document.querySelector('.carousel-arrow.right').addEventListener('click', () => {
-  index++;
-  updateCarousel();
-  if (index >= images.length + 1) {
-    setTimeout(() => { index = 1; updateCarousel(); }, 500);
+  // Pre-load the incoming offscreen image
+  if (direction === 1) {
+    slots[4].src = imgUrl(images[idx(2)]);
+  } else {
+    slots[0].src = imgUrl(images[idx(-2)]);
   }
-});
 
-document.querySelector('.carousel-arrow.left').addEventListener('click', () => {
-  index--;
-  updateCarousel();
-  if (index <= 0) {
-    setTimeout(() => { index = images.length; updateCarousel(); }, 500);
-  }
-});
+  // Slide the track: each slot is ~70% wide on average, shift by one slot width
+  const slotWidth = track.offsetWidth * 0.72;
+  track.style.transition = `transform ${DURATION}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+  track.style.transform  = `translateX(${-direction * slotWidth}px)`;
 
-// Initial position
-updateCarousel();
+  setTimeout(() => {
+    // Kill transition for instant reset
+    track.style.transition = 'none';
+    track.style.transform  = 'translateX(0)';
+
+    // Advance index and reload all slots in new positions
+    index = idx(direction);
+    loadSlots();
+    applySlotStyles();
+
+    // Allow next click
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => { animating = false; });
+    });
+  }, DURATION);
+}
+
+// Init
+loadSlots();
+applySlotStyles();
+
+document.querySelector('.arrow.right').addEventListener('click', () => slide(1));
+document.querySelector('.arrow.left').addEventListener('click',  () => slide(-1));
