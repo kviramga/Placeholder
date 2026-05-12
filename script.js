@@ -203,3 +203,23 @@ applySlotStyles();
 
 document.querySelector('.arrow.right').addEventListener('click', () => slide(1));
 document.querySelector('.arrow.left').addEventListener('click',  () => slide(-1));
+
+window.addEventListener('DOMContentLoaded', () => {
+  const backToTopButton = document.getElementById('back-to-top');
+
+  if (!backToTopButton) return;
+
+  const toggleButtonVisibility = () => {
+    backToTopButton.classList.add('show');
+  };
+
+  toggleButtonVisibility();
+  window.addEventListener('scroll', toggleButtonVisibility);
+
+  backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});

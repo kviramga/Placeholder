@@ -14,7 +14,7 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: var(--black);
   background-color: var(--cream);
 }
@@ -70,7 +70,7 @@ h2,h3,h4,h5,h6 {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 50px;
   margin: 0;
   padding: 0;
 }
@@ -79,7 +79,7 @@ h2,h3,h4,h5,h6 {
   text-decoration: none;
   color: var(--cream);
   font-weight: 800;
-  font-size: 14px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 
@@ -115,7 +115,7 @@ h2,h3,h4,h5,h6 {
 .hero-content p {
   max-width: 640px;
   margin: 0 auto 20px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--cream);
 }
 
@@ -160,7 +160,7 @@ h2,h3,h4,h5,h6 {
 #gallery h1 { color: var(--cream); }
 
 .section p {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   line-height: 1.75;
 }
 
@@ -181,7 +181,7 @@ h2,h3,h4,h5,h6 {
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
   letter-spacing: 0.5px;
   text-decoration: none;
   text-transform: uppercase;
@@ -268,7 +268,7 @@ h2,h3,h4,h5,h6 {
 
 .about-card h3 {
   margin: 12px 0 10px;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   letter-spacing: 0.5px;
   color: var(--cream);
 }
@@ -276,7 +276,7 @@ h2,h3,h4,h5,h6 {
 .about-card p {
   margin: 0;
   line-height: 1.6;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--cream);
 }
 
@@ -320,6 +320,7 @@ h2,h3,h4,h5,h6 {
   text-transform: uppercase;
   margin-bottom: 16px;
   color: var(--cream);
+  font-size: 1.2rem;
 }
 
 .faq-card dt::after {
@@ -336,6 +337,7 @@ h2,h3,h4,h5,h6 {
   margin: 0;
   line-height: 2;
   color: var(--cream);
+  font-size: 1.2rem;
 }
 
 .faq-card a {
@@ -392,6 +394,40 @@ h2,h3,h4,h5,h6 {
   font-weight: 500;
   opacity: 0.6;
   letter-spacing: 0.5px;
+}
+
+/* Back to top button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9999;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  line-height: 1;
+  padding: 0;
+}
+
+.back-to-top:hover {
+  background-color: var(--orange);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Archive cards */
