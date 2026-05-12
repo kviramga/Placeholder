@@ -14,6 +14,7 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
+  font-size: 1.1rem;
   color: var(--black);
   background-color: var(--cream);
 }
@@ -39,8 +40,13 @@ body {
 /* Typography */
 h1 {
   font-family: 'Neato Serif', serif;
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(3rem, 6vw, 5rem);
   margin-bottom: 10px;
+}
+
+.hero-card h1 img {
+  height: clamp(20rem, 20vw, 26rem);
+  vertical-align: middle;
 }
 
 h2,h3,h4,h5,h6 {
@@ -73,7 +79,7 @@ h2,h3,h4,h5,h6 {
   text-decoration: none;
   color: var(--cream);
   font-weight: 800;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 1px;
 }
 
@@ -96,7 +102,7 @@ h2,h3,h4,h5,h6 {
 .hero-content p {
   max-width: 640px;
   margin: 0 auto 20px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: var(--cream);
 }
 
@@ -112,9 +118,9 @@ h2,h3,h4,h5,h6 {
 
 /* Sections */
 .section {
-  padding: 80px 20px;
-  width: 90%;
-  max-width: 1000px;
+  padding: 90px 28px;
+  width: 95%;
+  max-width: 1200px;
   margin: 0 auto 100px;
   border-radius: 24px;
   position: relative;
@@ -141,16 +147,16 @@ h2,h3,h4,h5,h6 {
 #gallery h1 { color: var(--cream); }
 
 .section p {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.2rem;
+  line-height: 1.75;
 }
 
 /* Info links */
 .info-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 28px;
+  gap: 14px;
+  margin-top: 32px;
 }
 
 .info-btn {
@@ -158,15 +164,36 @@ h2,h3,h4,h5,h6 {
   background: rgba(252, 245, 227, 0.25);
   border: 1.5px solid rgba(252, 245, 227, 0.7);
   color: var(--cream);
-  padding: 10px 22px;
+  padding: 14px 24px;
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 1rem;
   letter-spacing: 0.5px;
   text-decoration: none;
   text-transform: uppercase;
   transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.impact-box {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.impact-box h2 {
+  margin-bottom: 18px;
+  color: var(--cream);
+  font-size: 2rem;
+}
+
+.impact-box iframe {
+  width: 80%;
+  max-width: 1000px;
+  min-height: 1100px;
+  margin: 0 auto;
+  border: 1px solid rgba(252, 245, 227, 0.7);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .info-btn:hover {
@@ -196,7 +223,7 @@ h2,h3,h4,h5,h6 {
   text-decoration: none;
   font-weight: 600;
   color: var(--peach);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   transition: color 0.3s ease;
 }
 
@@ -283,6 +310,16 @@ h2,h3,h4,h5,h6 {
   color: var(--cream);
 }
 
+.faq-card dt::after {
+  content: '▶';
+  float: right;
+  transition: transform 0.3s ease;
+}
+
+.faq-card.open dt::after {
+  transform: rotate(90deg);
+}
+
 .faq-card dd {
   margin: 0;
   line-height: 2;
@@ -290,7 +327,7 @@ h2,h3,h4,h5,h6 {
 }
 
 .faq-card a {
-  color: var(--peach);
+  color: var(--blue);
   transition: color 0.3s ease;
 }
 
