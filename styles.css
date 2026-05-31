@@ -4,6 +4,7 @@
   --peach: #DF9385;
   --orange: #E89533;
   --green: #2B4431;
+  --pink: #F5C0D4;
   --cream: #FCF5E3;
   --black: #272727;
 }
@@ -142,8 +143,135 @@ h2,h3,h4,h5,h6 {
 
 /* Dark cards */
 #gallery  { background: var(--blue);  color: var(--cream); }
+#previous-projects { background: var(--cream); color: var(--black); }
 #archive  { background: var(--green); color: var(--cream); }
 #faq      { background: var(--blue);  color: var(--cream); }
+
+#previous-projects h1 { color: var(--blue); }
+#previous-projects p { color: var(--blue); }
+
+.project-carousel {
+  position: relative;
+  margin-top: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+..project-track {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+  background: rgba(252, 245, 227, 0.95);
+  transition: transform 0.45s ease;
+}
+
+.project-card {
+  flex: 0 0 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  background: rgba(252, 245, 227, 0.95);
+  border: 1px solid rgba(223, 147, 133, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.project-video iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  border-radius: 18px;
+  background: black;
+}
+
+.project-copy h3 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  color: var(--cream);
+}
+
+.project-copy p {
+  margin: 0;
+  line-height: 1.75;
+  color: var(--blue);
+}
+
+.video-fallback {
+  margin-top: 0.85rem;
+}
+
+.video-fallback a {
+  color: var(--blue);
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.project-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.9);
+  color: var(--blue);
+  font-size: 2rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.16);
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 2;
+}
+
+.project-arrow:hover {
+  transform: translateY(-50%) scale(1.05);
+  background: rgba(255,255,255,1);
+}
+
+.project-arrow.left { left: -25px; }
+.project-arrow.right { right: -25px; }
+
+.project-track {
+  transform: translateX(0);
+}
+
+.project-bottom {
+  margin-top: 24px;
+  text-align: center;
+}
+
+@media (max-width: 920px) {
+  .project-arrow.left { left: 8px; }
+  .project-arrow.right { right: 8px; }
+}
+
+@media (max-width: 640px) {
+  .project-carousel {
+    flex-direction: column;
+  }
+
+  .project-arrow {
+    position: relative;
+    top: auto;
+    transform: none;
+    margin: 12px 8px 0;
+  }
+
+  .project-arrow.left, .project-arrow.right {
+    right: auto;
+    left: auto;
+  }
+}
 
 /* Warm cards — subtle transparency */
 #info {

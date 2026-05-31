@@ -204,13 +204,49 @@ applySlotStyles();
 document.querySelector('.arrow.right').addEventListener('click', () => slide(1));
 document.querySelector('.arrow.left').addEventListener('click',  () => slide(-1));
 
+const projectTrack = document.querySelector('.project-track');
+const projectCards = document.querySelectorAll('.project-card');
+let projectIndex = 0;
+
+function updateProjectCarousel() {
+  if (!projectTrack || projectCards.length === 0) return;
+  const cardWidth = projectCards[0].getBoundingClientRect().width;
+  const offset = projectIndex * cardWidth;
+  projectTrack.style.transform = `translate3d(-${offset}px, 0, 0)`;
+}
+
+const projectNext = document.querySelector('.project-arrow.right');
+const projectPrev = document.querySelector('.project-arrow.left');
+
+if (projectNext && projectPrev && projectTrack && projectCards.length) {
+  projectNext.addEventListener('click', () => {
+    projectIndex = (projectIndex + 1) % projectCards.length;
+    requestAnimationFrame(updateProjectCarousel);
+  });
+
+  projectPrev.addEventListener('click', () => {
+    projectIndex = (projectIndex - 1 + projectCards.length) % projectCards.length;
+    requestAnimationFrame(updateProjectCarousel);
+  });
+
+  window.addEventListener('resize', () => requestAnimationFrame(updateProjectCarousel));
+}
+
+window.addEventListener('load', () => {
+  updateProjectCarousel();
+});
+
 window.addEventListener('DOMContentLoaded', () => {
   const backToTopButton = document.getElementById('back-to-top');
 
   if (!backToTopButton) return;
 
   const toggleButtonVisibility = () => {
-    backToTopButton.classList.add('show');
+    if (window.pageYOffset > 300) {
+      backToTopButton.classList.add('show');
+    } else {
+      backToTopButton.classList.remove('show');
+    }
   };
 
   toggleButtonVisibility();
