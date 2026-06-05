@@ -4,7 +4,6 @@
   --peach: #DF9385;
   --orange: #E89533;
   --green: #2B4431;
-  --pink: #F5C0D4;
   --cream: #FCF5E3;
   --black: #272727;
 }
@@ -122,7 +121,7 @@ h2,h3,h4,h5,h6 {
 
 .hero-cta {
   display: inline-block;
-  background-color: var(--orange);
+  background-color: var(--peach);
   color: white;
   padding: 12px 24px;
   border-radius: 6px;
@@ -143,16 +142,16 @@ h2,h3,h4,h5,h6 {
 
 /* Dark cards */
 #gallery  { background: var(--blue);  color: var(--cream); }
-#previous-projects { background: var(--cream); color: var(--black); }
+#previous-projects { background: var(--peach); color: var(--black); }
 #archive  { background: var(--green); color: var(--cream); }
 #faq      { background: var(--blue);  color: var(--cream); }
 
-#previous-projects h1 { color: var(--blue); }
+#previous-projects h1 { color: var(--cream); }
 #previous-projects p { color: var(--blue); }
 
 .project-carousel {
   position: relative;
-  margin-top: 36px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,7 +161,7 @@ h2,h3,h4,h5,h6 {
   margin-right: auto;
 }
 
-..project-track {
+.project-track {
   display: flex;
   width: 100%;
   overflow: hidden;
@@ -182,26 +181,34 @@ h2,h3,h4,h5,h6 {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  overflow: visible;
+  min-width: 0;
 }
 
 .project-video iframe {
   width: 100%;
+  max-width: 100%;
   aspect-ratio: 16 / 9;
   border: none;
   border-radius: 18px;
   background: black;
+  display: block;
 }
 
 .project-copy h3 {
   margin: 0;
   font-size: clamp(1.4rem, 2vw, 1.8rem);
   color: var(--cream);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .project-copy p {
   margin: 0;
   line-height: 1.75;
   color: var(--blue);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .video-fallback {
@@ -246,7 +253,7 @@ h2,h3,h4,h5,h6 {
 }
 
 .project-bottom {
-  margin-top: 24px;
+  margin-top: 12px;
   text-align: center;
 }
 

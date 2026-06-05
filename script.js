@@ -204,37 +204,108 @@ applySlotStyles();
 document.querySelector('.arrow.right').addEventListener('click', () => slide(1));
 document.querySelector('.arrow.left').addEventListener('click',  () => slide(-1));
 
+// Projects carousel — implement same slot-based carousel as the gallery
 const projectTrack = document.querySelector('.project-track');
-const projectCards = document.querySelectorAll('.project-card');
+const originalProjectCards = Array.from(document.querySelectorAll('.project-card'));
 let projectIndex = 0;
+let projectAnimating = false;
 
-function updateProjectCarousel() {
-  if (!projectTrack || projectCards.length === 0) return;
-  const cardWidth = projectCards[0].getBoundingClientRect().width;
-  const offset = projectIndex * cardWidth;
-  projectTrack.style.transform = `translate3d(-${offset}px, 0, 0)`;
-}
+if (projectTrack && originalProjectCards.length) {
+  // Collect HTML for cloning into slots
+  const projectsHtml = originalProjectCards.map(c => c.outerHTML);
 
-const projectNext = document.querySelector('.project-arrow.right');
-const projectPrev = document.querySelector('.project-arrow.left');
+  // Clear existing track and build 5-slot buffer
+  projectTrack.innerHTML = '';
+  const projectSlots = [];
+  for (let i = 0; i < 5; i++) {
+    const slot = document.createElement('div');
+    slot.style.cssText = `flex-shrink: 0; transition: width ${DURATION}ms ease, opacity ${DURATION}ms ease;`;
+    projectTrack.appendChild(slot);
+    projectSlots.push(slot);
+  }
 
-if (projectNext && projectPrev && projectTrack && projectCards.length) {
-  projectNext.addEventListener('click', () => {
-    projectIndex = (projectIndex + 1) % projectCards.length;
-    requestAnimationFrame(updateProjectCarousel);
+  function projIdx(offset) {
+    return (projectIndex + offset + projectsHtml.length) % projectsHtml.length;
+  }
+
+  function applyProjectSlotStyles() {
+    const styles = [
+      { width: '0%', opacity: '0',   margin: '0', display: 'none' },
+      { width: '0%', opacity: '0',   margin: '0', display: 'none' },
+      { width: '100%', opacity: '1', margin: '0', display: 'block' },
+      { width: '0%', opacity: '0',   margin: '0', display: 'none' },
+      { width: '0%', opacity: '0',   margin: '0', display: 'none' },
+    ];
+    projectSlots.forEach((slot, i) => {
+      slot.style.width = styles[i].width;
+      slot.style.opacity = styles[i].opacity;
+      slot.style.margin = styles[i].margin;
+      slot.style.display = styles[i].display;
+      // ensure the inner card fills the slot
+      if (slot.firstElementChild) {
+        slot.firstElementChild.style.width = '100%';
+        slot.firstElementChild.style.boxSizing = 'border-box';
+      }
+    });
+  }
+
+  function loadProjectSlots() {
+    projectSlots[0].innerHTML = projectsHtml[projIdx(-2)];
+    projectSlots[1].innerHTML = projectsHtml[projIdx(-1)];
+    projectSlots[2].innerHTML = projectsHtml[projIdx(0)];
+    projectSlots[3].innerHTML = projectsHtml[projIdx(1)];
+    projectSlots[4].innerHTML = projectsHtml[projIdx(2)];
+  }
+
+  function slideProjects(direction) {
+    if (projectAnimating) return;
+    projectAnimating = true;
+
+    // Pre-load offscreen slot
+    if (direction === 1) {
+      projectSlots[4].innerHTML = projectsHtml[projIdx(2)];
+    } else {
+      projectSlots[0].innerHTML = projectsHtml[projIdx(-2)];
+    }
+
+    const slotWidth = projectTrack.offsetWidth * 0.72;
+    projectTrack.style.transition = `transform ${DURATION}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+    projectTrack.style.transform = `translateX(${-direction * slotWidth}px)`;
+
+    setTimeout(() => {
+      projectTrack.style.transition = 'none';
+      projectTrack.style.transform = 'translateX(0)';
+
+      projectIndex = projIdx(direction);
+      loadProjectSlots();
+      applyProjectSlotStyles();
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { projectAnimating = false; });
+      });
+    }, DURATION);
+  }
+
+  // Init
+  loadProjectSlots();
+  applyProjectSlotStyles();
+
+  const projectNext = document.querySelector('.project-arrow.right');
+  const projectPrev = document.querySelector('.project-arrow.left');
+
+  if (projectNext) projectNext.addEventListener('click', () => slideProjects(1));
+  if (projectPrev) projectPrev.addEventListener('click', () => slideProjects(-1));
+
+  window.addEventListener('resize', () => {
+    requestAnimationFrame(() => { applyProjectSlotStyles(); });
   });
 
-  projectPrev.addEventListener('click', () => {
-    projectIndex = (projectIndex - 1 + projectCards.length) % projectCards.length;
-    requestAnimationFrame(updateProjectCarousel);
+  // ensure correct initial layout once assets load
+  window.addEventListener('load', () => {
+    loadProjectSlots();
+    applyProjectSlotStyles();
   });
-
-  window.addEventListener('resize', () => requestAnimationFrame(updateProjectCarousel));
 }
-
-window.addEventListener('load', () => {
-  updateProjectCarousel();
-});
 
 window.addEventListener('DOMContentLoaded', () => {
   const backToTopButton = document.getElementById('back-to-top');
